@@ -3,7 +3,9 @@ const app = express();
 const port = 6117;
 
 app.get('*', (req, res) => {
-    const ipAddress = req.ip || req.connection.remoteAddress;
+    // Get the client IP address
+    const clientIp = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.ip;
+
     res.send(`
         <!DOCTYPE html>
         <html>
@@ -11,7 +13,7 @@ app.get('*', (req, res) => {
             <title>IP Address</title>
         </head>
         <body>
-            <h1>Your IP Address is: ${ipAddress}</h1>
+            <h1>Your Real IP Address is: ${clientIp}</h1>
         </body>
         </html>
     `);
@@ -20,4 +22,3 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 });
-

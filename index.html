@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe IP Address Display</title>
+    <title>IP Address or Domain in Iframe</title>
+    <script>
+        function updateIframe() {
+            const inputAddress = document.getElementById("ipOrDomain").value;
+            const iframe = document.getElementById("ipIframe");
+
+            // Update the iframe's source to the entered address
+            iframe.src = `https://${inputAddress}`;
+        }
+    </script>
 </head>
 <body>
-    <h1>IP Address Display in Iframe</h1>
-    <iframe src="http://localhost:6117" width="500" height="200"></iframe>
+    <h1>Enter IP Address or Domain</h1>
+
+    <form onsubmit="event.preventDefault(); updateIframe();">
+        <label for="ipOrDomain">IP Address or Domain: </label>
+        <input type="text" id="ipOrDomain" placeholder="Enter IP or domain" required>
+        <button type="submit">Load</button>
+    </form>
+
+    <h2>IP Address Display in Iframe</h2>
+    <iframe id="ipIframe" width="500" height="200" src="http://localhost:3000"></iframe>
 </body>
 </html>
